@@ -1,0 +1,79 @@
+{
+    "builders": [
+        {
+            "type": "qemu",
+            "iso_url": "{{user `iso_mirror`}}/pub/OpenBSD/6.2/amd64/install62.iso",
+            "iso_checksum": "b7994d29c7db3087db65158901d700fb7d10500b9b7496c1d86b285cabce0a2b",
+            "iso_checksum_type": "sha256",
+            "iso_checksum_url": "{{user `iso_mirror`}}/pub/OpenBSD/6.2/amd64/SHA256",
+            "output_directory": "openbsd62",
+            "shutdown_command": "/sbin/halt -p",
+            "disk_size": 80000,
+            "format": "qcow2",
+            "headless": true,
+            "accelerator": "kvm",
+            "http_directory": "",
+            "http_port_min": null,
+            "http_port_max": null,
+            "ssh_host_port_min": 2222,
+            "ssh_host_port_max": 2229,
+            "ssh_username": "root",
+            "ssh_password": "root",
+            "ssh_port": 22,
+            "ssh_wait_timeout": "1800s",
+            "vm_name": "openbsd62",
+            "net_device": "e1000",
+            "disk_interface": "virtio",
+            "boot_wait": "30s",
+            "boot_command": [
+                "S<enter>",
+                "cat <<EOF >>install.conf<enter>",
+                "Choose your keyboard layout = default<enter>",
+                "Terminal type? = vt220<enter>",
+                "System hostname = openbsd62<enter>",
+                "Which network interface do you wish to configure? = em0<enter>",
+                "IPv4 address for = 192.168.55.99<enter>",
+                "Netmask for = 255.255.255.0<enter>",
+                "IPv6 address for = autoconf<enter>",
+                "Which network interface do you wish to configure? = done<enter>",
+                "Default IPv4 route? = 192.168.55.1<enter>",
+                "DNS domain name? = jugni.xyz<enter>",
+                "DNS nameservers? = 8.8.8.8<enter>",
+                "Password for root = root<enter>",
+                "Start sshd(8) by default? = yes<enter>",
+                "Do you expect to run the X Window System? = no<enter>",
+                "Change the default console to com0? = no<enter>",
+                "Setup a user = codeghar<enter>",
+                "Full name for user = codeghar<enter>",
+                "Password for user = codeghar<enter>",
+                "Allow root ssh login = yes<enter>",
+                "Which disk is the root disk? = sd0<enter>",
+                "Use (W)hole disk MBR, whole disk (G)PT = whole<enter>",
+                "Use (A)uto layout, (E)dit auto layout, or create (C)ustom layout? = a<enter>",
+                "Location of set = cd0<enter>",
+                "Pathname to the sets? = 6.2/amd64<enter>",
+                "Set name(s) = <enter>",
+                "Directory does not contain SHA256.sig. Continue without verification? = yes<enter>",
+                "What timezone are you in = UTC<enter>",
+                "EOF<enter>",
+                "install -af install.conf<enter>"
+            ]
+          }
+    ],
+    "post-processors": [],
+    "provisioners": [
+        {
+            "environment_vars": [
+              "MIRROR={{user `iso_mirror`}}"
+            ],
+            "type": "shell",
+            "scripts": [
+              "postinstall.sh"
+            ],
+            "execute_command": "export {{.Vars}} && cat {{.Path}} | su -m"
+          }
+    ],
+    "variables": {
+        "iso_mirror": "http://ftp.openbsd.org"
+    }
+}
