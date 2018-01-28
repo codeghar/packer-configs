@@ -12,3 +12,7 @@ Review *openbsd-6.2-x86_64.json* and change these settings when desired:
 * "vm_name": "openbsd62.qcow2"  -- Change to what you need
 
 In *postinstall.sh*, change *USERNAME_CHANGEME* to what you need.
+
+To build the image,
+
+        $ packer build openbsd-6.2-x86_64.json
