@@ -1,16 +1,12 @@
 # Build OpenBSD qcow2 Image with Packer, QEMU, and KVM
 
-Review *openbsd-\*-x86_64.json* and change these settings when desired:
+OpenBSD 6.3 and 6.2 are supported.
 
-* "accelerator": "kvm" -- If you're not using KVM, remove this line
-* "System hostname = " -- Change to what you need
-* "Setup a user = "  -- Change to what you need
-* "Full name for user = "  -- Change to what you need
-* "Password for user = "  -- Change to what you need
-* "What timezone are you in = "  -- Change to what you need
-* "vm_name":  -- Change to what you need
+Review relevant *\*.json* and change these variables when desired:
 
-In *./postinstall.sh*, change *USERNAME_CHANGEME* to what you need.
+- root_ssh_password
+- new_user
+- new_user_password
 
 To build the image,
 

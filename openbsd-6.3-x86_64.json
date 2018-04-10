@@ -8,13 +8,13 @@
                 "Choose your keyboard layout = default<enter>",
                 "Terminal type? = vt220<enter>",
                 "System hostname = openbsd63<enter>",
-                "Password for root = root<enter>",
+                "Password for root = {{user `root_ssh_password`}}<enter>",
                 "Start sshd(8) by default? = yes<enter>",
                 "Do you expect to run the X Window System? = no<enter>",
                 "Change the default console to com0? = no<enter>",
-                "Setup a user = USERNAME_CHANGEME<enter>",
-                "Full name for user = USERNAME_CHANGEME<enter>",
-                "Password for user = PASSWORD_CHANGEME<enter>",
+                "Setup a user = {{user `new_user`}}<enter>",
+                "Full name for user = {{user `new_user`}}<enter>",
+                "Password for user = {{user `new_user_password`}}<enter>",
                 "Allow root ssh login = yes<enter>",
                 "Which disk is the root disk? = sd0<enter>",
                 "Use (W)hole disk MBR, whole disk (G)PT = whole<enter>",
@@ -42,7 +42,7 @@
             "type": "qemu",
             "ssh_host_port_min": 2222,
             "ssh_host_port_max": 2229,
-            "ssh_password": "root",
+            "ssh_password": "{{user `root_ssh_password`}}",
             "ssh_port": 22,
             "ssh_username": "root",
             "ssh_wait_timeout": "1800s",
@@ -53,7 +53,8 @@
     "provisioners": [
         {
             "environment_vars": [
-              "MIRROR={{user `iso_mirror`}}"
+              "MIRROR={{user `iso_mirror`}}",
+              "NEWUSER={{user `new_user`}}"
             ],
             "type": "shell",
             "scripts": [
@@ -62,6 +63,9 @@
           }
     ],
     "variables": {
-        "iso_mirror": "http://ftp.openbsd.org"
+        "iso_mirror": "http://ftp.openbsd.org",
+        "root_ssh_password": "root",
+        "new_user": "USERNAME_CHANGEME",
+        "new_user_password": "PASSWORD_CHANGEME"
     }
 }
