@@ -1,0 +1,67 @@
+{
+    "builders": [
+        {
+            "accelerator": "kvm",
+            "boot_command": [
+                "S<enter>",
+                "cat <<EOF >>install.conf<enter>",
+                "Choose your keyboard layout = default<enter>",
+                "Terminal type? = vt220<enter>",
+                "System hostname = openbsd63<enter>",
+                "Password for root = root<enter>",
+                "Start sshd(8) by default? = yes<enter>",
+                "Do you expect to run the X Window System? = no<enter>",
+                "Change the default console to com0? = no<enter>",
+                "Setup a user = USERNAME_CHANGEME<enter>",
+                "Full name for user = USERNAME_CHANGEME<enter>",
+                "Password for user = PASSWORD_CHANGEME<enter>",
+                "Allow root ssh login = yes<enter>",
+                "Which disk is the root disk? = sd0<enter>",
+                "Use (W)hole disk MBR, whole disk (G)PT = whole<enter>",
+                "Use (A)uto layout, (E)dit auto layout, or create (C)ustom layout? = a<enter>",
+                "Location of set = cd0<enter>",
+                "Pathname to the sets? = 6.3/amd64<enter>",
+                "Set name(s) = <enter>",
+                "Directory does not contain SHA256.sig. Continue without verification? = yes<enter>",
+                "What timezone are you in = UTC<enter>",
+                "EOF<enter>",
+                "install -af install.conf && reboot<enter>"
+            ],
+            "boot_wait": "30s",
+            "disk_interface": "virtio",
+            "disk_size": 80000,
+            "format": "qcow2",
+            "headless": true,
+            "iso_checksum": "ee775405dd7926975befbc3fef23de8c4b5a726c3b5075e4848fcd3a2a712ea8",
+            "iso_checksum_type": "sha256",
+            "iso_checksum_url": "{{user `iso_mirror`}}/pub/OpenBSD/6.3/amd64/SHA256",
+            "iso_url": "{{user `iso_mirror`}}/pub/OpenBSD/6.3/amd64/install63.iso",
+            "net_device": "e1000",
+            "output_directory": "openbsd63",
+            "shutdown_command": "/sbin/halt -p",
+            "type": "qemu",
+            "ssh_host_port_min": 2222,
+            "ssh_host_port_max": 2229,
+            "ssh_password": "root",
+            "ssh_port": 22,
+            "ssh_username": "root",
+            "ssh_wait_timeout": "1800s",
+            "vm_name": "openbsd63.qcow2"
+          }
+    ],
+    "post-processors": [],
+    "provisioners": [
+        {
+            "environment_vars": [
+              "MIRROR={{user `iso_mirror`}}"
+            ],
+            "type": "shell",
+            "scripts": [
+              "postinstall.sh"
+            ]
+          }
+    ],
+    "variables": {
+        "iso_mirror": "http://ftp.openbsd.org"
+    }
+}
