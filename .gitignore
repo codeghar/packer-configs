@@ -1,0 +1,4 @@
+.idea/
+.vscode/
+openbsd*/
+packer_cache/

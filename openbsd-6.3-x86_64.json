@@ -64,8 +64,8 @@
     ],
     "variables": {
         "iso_mirror": "http://ftp.openbsd.org",
-        "root_ssh_password": "root",
-        "new_user": "USERNAME_CHANGEME",
-        "new_user_password": "PASSWORD_CHANGEME"
+        "root_ssh_password": null,
+        "new_user": null,
+        "new_user_password": null
     }
 }

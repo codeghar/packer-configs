@@ -1,8 +1,8 @@
 # Build OpenBSD qcow2 Image with Packer, QEMU, and KVM
 
-OpenBSD 6.3 and 6.2 are supported.
+OpenBSD 6.4, 6.3, and 6.2 are supported.
 
-Review relevant *\*.json* and change these variables when desired:
+Review _variables.json_ and change the values for:
 
 - root_ssh_password
 - new_user
@@ -10,5 +10,10 @@ Review relevant *\*.json* and change these variables when desired:
 
 To build the image,
 
-        $ packer build openbsd-6.3-x86_64.json
-        $ packer build openbsd-6.2-x86_64.json
+        $ packer build -var-file=variables.json openbsd-6.4-x86_64.json
+        $ packer build -var-file=variables.json openbsd-6.3-x86_64.json
+        $ packer build -var-file=variables.json openbsd-6.2-x86_64.json
+
+Or,
+
+        $ make build
